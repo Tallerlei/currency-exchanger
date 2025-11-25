@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Favicon</title>
+</head>
+<body>
+    <canvas id="canvas" width="32" height="32"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Create gradient background
+        const gradient = ctx.createLinearGradient(0, 0, 32, 32);
+        gradient.addColorStop(0, '#8b5cf6');
+        gradient.addColorStop(1, '#6366f1');
+        
+        // Fill background
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 32, 32);
+        
+        // Draw dollar sign
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 18px Arial';
+        ctx.fillText('$', 4, 16);
+        
+        // Draw euro sign
+        ctx.font = 'bold 18px Arial';
+        ctx.fillText('€', 14, 28);
+        
+        // Draw exchange arrows
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        
+        // Arrow down-right
+        ctx.beginPath();
+        ctx.moveTo(12, 17);
+        ctx.lineTo(18, 23);
+        ctx.stroke();
+        
+        // Arrow head
+        ctx.beginPath();
+        ctx.moveTo(15, 23);
+        ctx.lineTo(18, 23);
+        ctx.lineTo(18, 20);
+        ctx.fill();
+        
+        // Arrow up-left
+        ctx.beginPath();
+        ctx.moveTo(20, 15);
+        ctx.lineTo(14, 9);
+        ctx.stroke();
+        
+        // Arrow head
+        ctx.beginPath();
+        ctx.moveTo(17, 9);
+        ctx.lineTo(14, 9);
+        ctx.lineTo(14, 12);
+        ctx.fill();
+        
+        // Download link
+        const link = document.createElement('a');
+        link.download = 'favicon.png';
+        link.href = canvas.toDataURL();
+        link.textContent = 'Download favicon.png';
+        link.style.display = 'block';
+        link.style.marginTop = '20px';
+        document.body.appendChild(link);
+        
+        console.log('Right-click the canvas and save as favicon.ico');
+    </script>
+</body>
+</html>

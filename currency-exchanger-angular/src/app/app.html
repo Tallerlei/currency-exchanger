@@ -1,52 +1,83 @@
-<div class="container">
-  <div class="row">
-    <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 center-block">
-      <h1>Currency Converter</h1>
-      <br><br>
-      <form class="form-inline">
-        <div class="form-group">
-          <select 
-            class="form-control" 
-            [(ngModel)]="fromCurrency" 
-            name="fromCurrency"
-            (change)="currencyChanged()">
-            <option *ngFor="let curr of currencies" [value]="curr.code">
-              {{ curr.symbol }}
-            </option>
-          </select>
-          <input 
-            class="form-control" 
-            type="number" 
-            step="1" 
-            [(ngModel)]="amount"
-            name="amount"
-            placeholder="How much?" 
-            autocomplete="off" 
-            (keyup)="convertMoney()" />
-          <button 
-            class="btn btn-default" 
-            (click)="swapCurrency($event)">
-            <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
-          </button>
-          <br>
-          <select 
-            class="form-control" 
-            [(ngModel)]="toCurrency"
-            name="toCurrency"
-            (change)="currencyChanged()">
-            <option *ngFor="let curr of currencies" [value]="curr.code">
-              {{ curr.symbol }}
-            </option>
-          </select>
-          <input 
-            class="form-control" 
-            type="text" 
-            [value]="result" 
-            placeholder="0" 
-            readonly />
-          <br>
-        </div>
-      </form>
-    </div>
+<div class="converter-container">
+  <div class="converter-card">
+    <h1 class="converter-title">Currency Converter</h1>
+    
+    <form class="converter-form" role="form" aria-label="Currency conversion form">
+      <div class="currency-input-group">
+        <label for="fromCurrency" class="visually-hidden">From currency</label>
+        <select 
+          id="fromCurrency"
+          class="currency-select" 
+          [(ngModel)]="fromCurrency" 
+          name="fromCurrency"
+          (change)="onFromCurrencyChange()"
+          aria-label="Select source currency">
+          <option *ngFor="let curr of currencies" [value]="curr.code">
+            {{ curr.code }} - {{ curr.name }}
+          </option>
+        </select>
+        
+        <label for="amount" class="visually-hidden">Amount to convert</label>
+        <input 
+          id="amount"
+          class="amount-input" 
+          type="number" 
+          step="0.01"
+          min="0"
+          [(ngModel)]="amount"
+          name="amount"
+          placeholder="0.00" 
+          autocomplete="off" 
+          (input)="onAmountChange()"
+          (focus)="onAmountFocus()"
+          aria-label="Enter amount to convert" />
+      </div>
+
+      <div class="swap-button-container">
+        <button 
+          type="button"
+          class="swap-button" 
+          (click)="swapCurrency($event)"
+          aria-label="Swap currencies">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="17 1 21 5 17 9"></polyline>
+            <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+            <polyline points="7 23 3 19 7 15"></polyline>
+            <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="currency-input-group">
+        <label for="toCurrency" class="visually-hidden">To currency</label>
+        <select 
+          id="toCurrency"
+          class="currency-select" 
+          [(ngModel)]="toCurrency"
+          name="toCurrency"
+          (change)="onToCurrencyChange()"
+          aria-label="Select target currency">
+          <option *ngFor="let curr of currencies" [value]="curr.code">
+            {{ curr.code }} - {{ curr.name }}
+          </option>
+        </select>
+        
+        <label for="result" class="visually-hidden">Converted amount</label>
+        <input 
+          id="result"
+          class="amount-input result-input" 
+          type="number" 
+          step="0.01"
+          min="0"
+          [(ngModel)]="resultAmount"
+          name="result"
+          placeholder="0.00" 
+          autocomplete="off"
+          (input)="onResultChange()"
+          (focus)="onResultFocus()"
+          aria-label="Converted amount"
+          aria-live="polite" />
+      </div>
+    </form>
   </div>
 </div>
