@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 center-block">
+      <h1>Currency Converter</h1>
+      <br><br>
+      <form class="form-inline">
+        <div class="form-group">
+          <select 
+            class="form-control" 
+            [(ngModel)]="fromCurrency" 
+            name="fromCurrency"
+            (change)="currencyChanged()">
+            <option *ngFor="let curr of currencies" [value]="curr.code">
+              {{ curr.symbol }}
+            </option>
+          </select>
+          <input 
+            class="form-control" 
+            type="number" 
+            step="1" 
+            [(ngModel)]="amount"
+            name="amount"
+            placeholder="How much?" 
+            autocomplete="off" 
+            (keyup)="convertMoney()" />
+          <button 
+            class="btn btn-default" 
+            (click)="swapCurrency($event)">
+            <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+          </button>
+          <br>
+          <select 
+            class="form-control" 
+            [(ngModel)]="toCurrency"
+            name="toCurrency"
+            (change)="currencyChanged()">
+            <option *ngFor="let curr of currencies" [value]="curr.code">
+              {{ curr.symbol }}
+            </option>
+          </select>
+          <input 
+            class="form-control" 
+            type="text" 
+            [value]="result" 
+            placeholder="0" 
+            readonly />
+          <br>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
