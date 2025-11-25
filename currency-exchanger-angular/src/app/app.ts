@@ -17,6 +17,12 @@ export class App implements OnInit {
   result: string = '0.00';
   rate: number = 0;
   isConvertingFromSource: boolean = true;
+  
+  // Money printer feature
+  isPrinting: boolean = false;
+  printingMessage: string = '';
+  moneyEmojis: Array<{emoji: string, left: string, animationDelay: string}> = [];
+  brrrrText: string = '';
 
   currencies = [
     { code: 'AED', symbol: 'د.إ', name: 'UAE Dirham' },
@@ -194,5 +200,87 @@ export class App implements OnInit {
     this.fromCurrency = this.toCurrency;
     this.toCurrency = tempCurrency;
     this.getCurrencyData();
+  }
+
+  // Money printer go BRRR feature!
+  activateMoneyPrinter() {
+    if (this.isPrinting) return;
+    
+    this.isPrinting = true;
+    const funnyMessages = [
+      "🖨️ MONEY PRINTER GO BRRRRR!!!",
+      "💸 Federal Reserve has entered the chat...",
+      "🚁 Helicopter money incoming!",
+      "📈 Stonks only go up!",
+      "💰 Quantitative easing activated!",
+      "🤑 Your wallet is now heavier!"
+    ];
+    
+    this.printingMessage = funnyMessages[Math.floor(Math.random() * funnyMessages.length)];
+    
+    // Create money rain effect
+    this.createMoneyRain();
+    
+    // Add BRRRR sound effect text
+    this.animateBRRRR();
+    
+    // Multiply the amount by a random factor (10x to 1000x)
+    const multiplier = Math.floor(Math.random() * 991) + 10; // 10 to 1000
+    const originalAmount = this.amount;
+    this.amount = originalAmount * multiplier;
+    this.isConvertingFromSource = true;
+    this.convertMoney();
+    
+    // Reset after 3 seconds with a funny message
+    setTimeout(() => {
+      this.amount = originalAmount;
+      this.convertMoney();
+      this.printingMessage = "💔 Reality check: Inflation has caught up!";
+      
+      setTimeout(() => {
+        this.isPrinting = false;
+        this.printingMessage = '';
+        this.moneyEmojis = [];
+        this.brrrrText = '';
+      }, 2000);
+    }, 3000);
+  }
+  
+  private createMoneyRain() {
+    const emojis = ['💵', '💴', '💶', '💷', '💰', '💸', '🤑'];
+    this.moneyEmojis = [];
+    
+    for (let i = 0; i < 20; i++) {
+      setTimeout(() => {
+        if (this.isPrinting) {
+          const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+          const left = Math.random() * 90 + 5; // Random position between 5% and 95%
+          const delay = Math.random() * 0.5; // Random delay up to 0.5s
+          
+          this.moneyEmojis.push({
+            emoji: emoji,
+            left: `${left}%`,
+            animationDelay: `${delay}s`
+          });
+          
+          // Remove old emojis to prevent overflow
+          if (this.moneyEmojis.length > 15) {
+            this.moneyEmojis.shift();
+          }
+        }
+      }, i * 100);
+    }
+  }
+  
+  private animateBRRRR() {
+    let count = 0;
+    const interval = setInterval(() => {
+      if (count < 30) {
+        this.brrrrText += 'R';
+        count++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 50);
   }
 }

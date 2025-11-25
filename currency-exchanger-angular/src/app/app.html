@@ -79,5 +79,31 @@
           aria-live="polite" />
       </div>
     </form>
+    
+    <!-- Money Printer Go BRRR Feature -->
+    <div class="money-printer-section">
+      <button 
+        type="button"
+        class="money-printer-button" 
+        (click)="activateMoneyPrinter()"
+        [disabled]="isPrinting"
+        [class.printing]="isPrinting"
+        aria-label="Activate money printer">
+        <span class="printer-icon">🖨️</span>
+        <span class="printer-text">{{ isPrinting ? 'BRRRRR' + brrrrText : 'MONEY PRINTER GO BRRR' }}</span>
+        <span class="printer-icon">💵</span>
+      </button>
+      
+      <div class="printing-message" *ngIf="printingMessage">
+        {{ printingMessage }}
+      </div>
+      
+      <div class="money-rain" *ngIf="isPrinting">
+        <span *ngFor="let item of moneyEmojis" 
+              class="money-emoji" 
+              [style.left]="item.left"
+              [style.animation-delay]="item.animationDelay">{{ item.emoji }}</span>
+      </div>
+    </div>
   </div>
 </div>
